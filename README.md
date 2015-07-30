@@ -66,24 +66,34 @@ sudo pacman --root $CONTAINER -S util-linux procps-ng coreutils iproute2
 
 # FAQ
 
-* Can I use virtualenv?
-  No, virtualenv is not relocatable, it woud be problematic to use it across containers and the host.
-  the [pep-0370](https://www.python.org/dev/peps/pep-0370/), PYTHONUSERBASE env var way is actually
-  simpler, standardized and much better supported. Works each time.
+#### Can I use virtualenv?
 
-* Updating the system?
-  `pacman --root $CONTAINER -Syu` - it's the host sys-admin responsibility.
+No, virtualenv is not relocatable, it woud be problematic to use it across containers and the host.
+the [pep-0370](https://www.python.org/dev/peps/pep-0370/), PYTHONUSERBASE env var way is actually
+simpler, standardized and much better supported. Works each time.
 
-* PHP?
-  Sure, just install `uwsgi-plugin-php`. PHP apps don't need PYTHONUSERBASE of course, and are ussually self contained.
-  You don't even need the `open_basedir` restriction since there's nothing to see in the container (and it does have
-  a bad performance impact).
+#### Updating the system?
 
-* Ruby/Rack
-  Install `uwsgi-plugin-rack`.
+`pacman --root $CONTAINER -Syu` - it's the host sys-admin responsibility.
 
-* Debian, Ubuntu containers?
-  Yep, just use `debootstrap` as documented in the [systemd-nspawn](http://www.freedesktop.org/software/systemd/man/systemd-nspawn.html) man page. They do have older uwsgi packages though (maybe more stable?).
+#### PHP?
+
+Sure, just install `uwsgi-plugin-php`. PHP apps don't need PYTHONUSERBASE of course, and are ussually self contained.
+You don't even need the `open_basedir` restriction since there's nothing to see in the container (and it does have
+a bad performance impact).
+
+#### Ruby/Rack
+
+Install `uwsgi-plugin-rack`. Use bundler to install things in `$MYAPP/vendor` - this seems to be a widely used Ruby
+convention.
+
+#### Debian, Ubuntu containers?
+
+Yep, just use `debootstrap` as documented in the [systemd-nspawn](http://www.freedesktop.org/software/systemd/man/systemd-nspawn.html) man page. They do have older uwsgi packages though (maybe more stable?).
+
+#### Debian, Ubuntu, RHEL, Fedora as hosts?
+
+Haven't tried them. I'd assume they'll just work until further.
 
 
 # Why not use Docker
