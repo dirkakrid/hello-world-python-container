@@ -8,7 +8,7 @@ OpenSuse, etc…
 
 Just to show a possibly better alternative to Docker.
 
-## HOW
+## HOW & WHAT
 
 …
 
@@ -61,6 +61,8 @@ sudo pacman --root $CONTAINER -S util-linux procps-ng coreutils iproute2
 * systemd-nspawn should support the --template and --ephemeral features with overlayfs in addition to btrfs. That should
   make things easier for people not using btrfs.
 
+* When (if?) user namespaces kernel feature becomes more widely supported, even the use of `sudo` might not be needed.
+
 
 # FAQ
 
@@ -73,9 +75,12 @@ sudo pacman --root $CONTAINER -S util-linux procps-ng coreutils iproute2
   `pacman --root $CONTAINER -Syu` - it's the host sys-admin responsibility.
 
 * PHP?
-  Sure, jsut install uwsgi-plugin-php. PHP apps don't need PYTHONUSERBASE of course, and are ussually self contained.
-  You don't even neeed the `open_basedir` restriction since there's nothing to see in the container (and it does have
+  Sure, just install `uwsgi-plugin-php`. PHP apps don't need PYTHONUSERBASE of course, and are ussually self contained.
+  You don't even need the `open_basedir` restriction since there's nothing to see in the container (and it does have
   a bad performance impact).
+
+* Ruby/Rack
+  Install `uwsgi-plugin-rack`.
 
 * Debian, Ubuntu containers?
   Yep, just use `debootstrap` as documented in the [systemd-nspawn](http://www.freedesktop.org/software/systemd/man/systemd-nspawn.html) man page. They do have older uwsgi packages though (maybe more stable?).
@@ -98,4 +103,5 @@ seems to me as a very mediocre process management system.
 Binary blobs running with basically root privileges. Also images on the hub are not updated (heartbleed anyone), and
 often contain left-over unneeded files in them. The worst part of it is the culture it creates :(
 
-PS. seems that Docker community will 
+PS. seems that Docker community will fix these issues in the future. There's also a lot of work and community around
+the [Open Container](https://www.opencontainers.org/) standards.
